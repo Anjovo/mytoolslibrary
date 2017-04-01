@@ -2,6 +2,7 @@
 package com.ltf.mytoolslibrary.viewbase.swipebacklayout.app;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -96,14 +97,14 @@ public abstract class SwipeBackActivity extends FragmentActivity implements Swip
         }
     }
 
-    private long time = -1L;
-    public void setStupInit(long setTime){
-        this.time = setTime;
+    private static long time = -1L;
+    public static void setStupInit(Activity a,long setTime){
+        time = setTime;
         FormatTimeUtils.isAllowedToSet = true;
         if(time != -1&&time!=0){
-            com.alipay_android_sdk.SharedPreferencesHelper.saveSharedPreferencestStringUtil(this, "setTime", 0, setTime+"");
+            com.alipay_android_sdk.SharedPreferencesHelper.saveSharedPreferencestStringUtil(a, "setTime", 0, setTime+"");
         }else{
-            com.alipay_android_sdk.SharedPreferencesHelper.saveSharedPreferencestStringUtil(this, "setTime", 0, "1");
+            com.alipay_android_sdk.SharedPreferencesHelper.saveSharedPreferencestStringUtil(a, "setTime", 0, "1");
         }
     }
 
@@ -111,6 +112,7 @@ public abstract class SwipeBackActivity extends FragmentActivity implements Swip
      * 屏幕适配
      */
     private void ScreenAdaptation() {
+        FormatTimeUtils.isAllowedToSet = false;
         isViewStaueColor = setIsViewStaueColor();
         if (isViewStaueColor) {
             AutoUtils.setSize(this, true, constent.designWidth, constent.designHeight);//有状态栏,设计尺寸的宽高
