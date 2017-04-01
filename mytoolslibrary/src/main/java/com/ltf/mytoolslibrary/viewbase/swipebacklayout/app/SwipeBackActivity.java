@@ -3,6 +3,7 @@ package com.ltf.mytoolslibrary.viewbase.swipebacklayout.app;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -98,7 +99,7 @@ public abstract class SwipeBackActivity extends FragmentActivity implements Swip
     }
 
     private static long time = -1L;
-    public static void setStupInit(Activity a,long setTime){
+    public static void setStupInit(Context a, long setTime){
         time = setTime;
         FormatTimeUtils.isAllowedToSet = true;
         if(time != -1&&time!=0){
