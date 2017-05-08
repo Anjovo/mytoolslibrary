@@ -16,11 +16,10 @@ public class application extends ApplicationBase {
     @Override
     public String setCrashErrorMessageName() {
         return "JiaBao";
-    }
+    }//全局使用的文件夾名字包括臨時文件儲存的地方
 
     @Override
     public void onCreate() {
         super.onCreate();
-        SwipeBackActivity.setStupInit(getApplicationContext(),1591700512135L);
     }
 }
