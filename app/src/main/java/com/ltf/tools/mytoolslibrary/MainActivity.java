@@ -32,7 +32,7 @@ public class MainActivity extends ActivityTitleBase {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PicassoUtil.getInstantiation().onWidgetImage(this,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1494238909619&di=0e293f376ea537a36ace082e0b659ae8&imgtype=0&src=http%3A%2F%2Fwww.zhlzw.com%2FUploadFiles%2FArticle_UploadFiles%2F201204%2F20120412123906588.jpg", (ImageView) findViewById(R.id.imgs));
+        PicassoUtil.getInstantiation().onWidgetImage(this,"http://img1.mm131.com/pic/1472/1.jpg", (ImageView) findViewById(R.id.imgs));
     }
 
     @Override
