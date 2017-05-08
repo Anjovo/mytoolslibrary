@@ -1,6 +1,7 @@
 package com.ltf.tools.mytoolslibrary;
 
 import com.ltf.mytoolslibrary.viewbase.app.ApplicationBase;
+import com.ltf.mytoolslibrary.viewbase.swipebacklayout.app.SwipeBackActivity;
 
 /**
  * Created by Administrator on 2017/3/31.
@@ -15,5 +16,10 @@ public class application extends ApplicationBase {
     @Override
     public String setCrashErrorMessageName() {
         return "JiaBao";
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
     }
 }

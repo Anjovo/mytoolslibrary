@@ -1,10 +1,16 @@
 package com.ltf.tools.mytoolslibrary;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.ltf.mytoolslibrary.viewbase.base.ActivityTitleBase;
+import com.ltf.mytoolslibrary.viewbase.takephoto.TakephotoUtils;
+import com.ltf.mytoolslibrary.viewbase.takephoto.bean.ImageItem;
 import com.ltf.mytoolslibrary.viewbase.utils.PicassoUtil;
+import com.ltf.mytoolslibrary.viewbase.utils.show.L;
+
+import java.util.ArrayList;
 
 /**工具类库
  * 使用用例**/
@@ -35,4 +41,16 @@ public class MainActivity extends ActivityTitleBase {
     protected int setLayoutId() {
         return R.layout.activity_main;
     }
+
+    public void onClickd(View v){
+        TakephotoUtils.getTakephotoUtils().initImagePickerMore(this);
+        TakephotoUtils.getTakephotoUtils().startTakePhoto(this, new TakephotoUtils.onUserSelectPicBackLisnner() {
+            @Override
+            public void onUserSelectPicBack(ArrayList<ImageItem> pic) {
+                if(pic !=null&&pic.size()>0)
+                L.d("mainActivity",pic.get(0).path);
+            }
+        });
+    }
+
 }
