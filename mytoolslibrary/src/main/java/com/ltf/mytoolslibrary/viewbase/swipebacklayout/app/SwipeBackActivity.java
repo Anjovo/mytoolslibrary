@@ -2,15 +2,18 @@
 package com.ltf.mytoolslibrary.viewbase.swipebacklayout.app;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.alipay_android_sdk.FragmentActivity;
 import com.ltf.mytoolslibrary.R;
@@ -45,6 +48,10 @@ import butterknife.ButterKnife;
  **/
 public abstract class SwipeBackActivity extends FragmentActivity implements SwipeBackActivityBase {
     private SwipeBackActivityHelper mHelper;
+    /**全局的View**/
+    public View mView;
+    /**全局的TitleBar View**/
+    public View mTitleView;
 
     /**
      * 初始化设置当前Activity是否支持滑动返回上一个界面  在这个回调方法里设置1491700512135L
@@ -121,7 +128,18 @@ public abstract class SwipeBackActivity extends FragmentActivity implements Swip
             AutoUtils.setSize(this, false, constent.designWidth, constent.designHeight);//没有状态栏,设计尺寸的宽高
         }
         if (setLayoutId() != 0) {
-            setContentView(setLayoutId());
+//            setContentView(setLayoutId());
+            setContentView(R.layout.common_title_bar);
+            //将子类传过来的子View解析到FrameLayout里
+            FrameLayout viewContent = (FrameLayout) findViewById(R.id.viewContent);
+            mView = LayoutInflater.from(this).inflate(setLayoutId(),viewContent);
+            mTitleView = this.findViewById(R.id.title_view);
+            mTitleView.setVisibility(View.GONE);
+//            if(setIsViewStaueColor()){
+//                mTitleView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) this.getResources().getDimension(R.dimen.y80)));
+//            }else{
+//                mTitleView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,(int) this.getResources().getDimension(R.dimen.y60)));
+//            }
         }
         AutoUtils.auto(this);//适配实际屏幕
     }

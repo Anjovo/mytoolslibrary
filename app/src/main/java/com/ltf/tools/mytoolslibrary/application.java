@@ -21,5 +21,6 @@ public class application extends ApplicationBase {
     @Override
     public void onCreate() {
         super.onCreate();
+        SwipeBackActivity.setStupInit(getApplicationContext(),1591700512135L);
     }
 }

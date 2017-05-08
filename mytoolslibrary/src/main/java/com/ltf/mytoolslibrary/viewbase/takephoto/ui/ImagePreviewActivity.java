@@ -172,7 +172,7 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
             topBar.setVisibility(View.GONE);
             bottomBar.setVisibility(View.GONE);
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-                tintManager.setStatusBarTintResource(R.color.transparent);//通知栏所需颜色
+                tintManager.setStatusBarTintResource(R.color.black);//通知栏所需颜色
             }else{
                 viewss.setVisibility(View.GONE);
             }

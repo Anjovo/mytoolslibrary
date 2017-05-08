@@ -57,7 +57,7 @@ import java.util.List;
  */
 public abstract class ActivityTitleBase extends SwipeBackActivity{
 
-	private View mTitleLocationLay,mTitleView,mTitleBackRightBtn,mTitleMapSearchLin;
+	private View mTitleLocationLay,mTitleBackRightBtn,mTitleMapSearchLin;
 	private RelativeLayout mSearch_LinearLayout;
 	private ImageView searchImageView,mSearchDeleteImageView,mTitleRightImgIv,mTitleLeftImgIv,mTitleRightMapBtn,mTitleRightSearchBtn;
 	private TextView mTitleCentreTextTv,mTitleLocationcityNameTv,mTitleBackBtn,mTitleCentreTextTvPic;
@@ -121,6 +121,7 @@ public abstract class ActivityTitleBase extends SwipeBackActivity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AppManager.getAppManager().addActivity(this);
+		setTitleBarNoVisibility();
 		initTitle();
 	}
 
@@ -192,50 +193,59 @@ public abstract class ActivityTitleBase extends SwipeBackActivity{
 		}
 	}
 
-	public void setTitleBarVisibility(){
-		mTitleView = this.findViewById(R.id.title_view);
-		mTitleView.setVisibility(View.VISIBLE);
-	}
-	
+	/**设置标题显示**/
 	public void setTitleBarNoVisibility(){
-		mTitleView = this.findViewById(R.id.title_view);
+		if(mTitleView == null){
+			mTitleView = this.findViewById(R.id.title_view);
+		}
 		mTitleView.setVisibility(View.GONE);
 	}
-	
+
+	/**设置标题不显示**/
+	public void setTitleBarVisibility(){
+		if(mTitleView == null){
+			mTitleView = this.findViewById(R.id.title_view);
+		}
+		mTitleView.setVisibility(View.VISIBLE);
+	}
+
 	/** 设置标题栏左边的定位城市 **/
 	public void setUpLeftLocationCityName(String city) {
+		setTitleBarVisibility();
 		mTitleLocationLay = this.findViewById(R.id.common_title_bar_location_lay);
 		mTitleLocationcityNameTv = (TextView) this.findViewById(R.id.common_title_bar_city_name);
 		mTitleLocationcityNameTv.setText(city);
 		mTitleLocationLay.setVisibility(View.VISIBLE);
 		mTitleLocationcityNameTv.setOnClickListener(onClickListener);
-	} 
-	
+	}
+
 	/** 设置标题栏左边的返回键 **/
 	public void setUpTitleBack() {
+		setTitleBarVisibility();
 		mTitleBackBtn = (TextView) this.findViewById(R.id.common_title_bar_back_img);
 		mTitleBackBtn.setVisibility(View.VISIBLE);
 		mTitleBackBtn.setOnClickListener(onClickListener);
 	}
-	
+
 	/** 设置标题栏左边的返回键 **/
 	public void setUpTitleBack(String text,int drawable) {
+		setTitleBarVisibility();
 		mTitleBackBtn = (TextView) this.findViewById(R.id.common_title_bar_back_img);
 		mTitleBackBtn.setVisibility(View.VISIBLE);
 		mTitleBackBtn.setText(text);
 		if(drawable != 0){
-			Drawable nav_up=getResources().getDrawable(drawable);  
-			nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());  
-			mTitleBackBtn.setCompoundDrawables(nav_up, null, null, null);  
+			Drawable nav_up=getResources().getDrawable(drawable);
+			nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
+			mTitleBackBtn.setCompoundDrawables(nav_up, null, null, null);
 		}else if(drawable == 0){
 			mTitleBackBtn.setCompoundDrawables(null, null, null, null);
 		}
 
 		mTitleBackBtn.setOnClickListener(onClickListener);
 	}
-	
+
 	/**
-	 * 方法名: onTitleSearchSelectItem() 备注: 标题栏搜索下拉框中某项被选择回调 
+	 * 方法名: onTitleSearchSelectItem() 备注: 标题栏搜索下拉框中某项被选择回调
 	 */
 	public void onTitleSearchSelectItem(AdapterView<?> parent, View view, int position, long id){};
 	/**
@@ -253,12 +263,14 @@ public abstract class ActivityTitleBase extends SwipeBackActivity{
 	 * 为true表明回调onTitleSearchSelectItem(AdapterView<?> parent, View view, int position, long id)
 	 * **/
 	public void setUpTitleCenterSerch1(String[] objects) {
+		setTitleBarVisibility();
 		mSearch_LinearLayout = (RelativeLayout) this .findViewById(R.id.search_LinearLayout);
 		if(objects == null){
 			mSearch_LinearLayout.setVisibility(View.GONE);
 		}else{
 			setUpTitleSearchBtn();
-			mTitleView = this.findViewById(R.id.title_view);
+			if(mTitleView == null)
+				mTitleView = this.findViewById(R.id.title_view);
 			mSearchContentEditText = (AutoCompleteTextView) this .findViewById(R.id.searchContentEditText);
 			mSearchDeleteImageView = (ImageView) this .findViewById(R.id.searchDeleteImageView);
 			mSearchContentEditText.setThreshold(1);
@@ -275,6 +287,7 @@ public abstract class ActivityTitleBase extends SwipeBackActivity{
 
 	/**设置搜索框提示文字**/
 	public void setSearchHintText(String msg){
+		setTitleBarVisibility();
 		mSearchContentEditText = (AutoCompleteTextView) this .findViewById(R.id.searchContentEditText);
 		mSearchContentEditText.setHint(msg);
 	}
@@ -285,12 +298,14 @@ public abstract class ActivityTitleBase extends SwipeBackActivity{
 	 * 为true表明回调onTitleSearchSelectItem(AdapterView<?> parent, View view, int position, long id)
 	 * **/
 	public void setUpTitleCenterSerch(List<dataBean> objects) {
+		setTitleBarVisibility();
 		mSearch_LinearLayout = (RelativeLayout) this .findViewById(R.id.search_LinearLayout);
 		if(objects == null){
 			mSearch_LinearLayout.setVisibility(View.GONE);
 		}else{
 			setUpTitleSearchBtn();
-			mTitleView = this.findViewById(R.id.title_view);
+			if(mTitleView == null)
+				mTitleView = this.findViewById(R.id.title_view);
 			mSearchContentEditText = (AutoCompleteTextView) this .findViewById(R.id.searchContentEditText);
 			mSearchDeleteImageView = (ImageView) this .findViewById(R.id.searchDeleteImageView);
 			mSearchContentEditText.setThreshold(1);
@@ -308,6 +323,7 @@ public abstract class ActivityTitleBase extends SwipeBackActivity{
 
 	/**设置搜索框左边搜索图片和搜索框的背景色**/
 	public void setUpTitleCenterSearchBg(int resid,int resid1){
+		setTitleBarVisibility();
 		mSearchContentEditText = (AutoCompleteTextView) this .findViewById(R.id.searchContentEditText);
 		searchImageView =  (ImageView) this.findViewById(R.id.searchImageView);
 		mSearchContentEditText.setBackgroundResource(resid);
@@ -320,6 +336,7 @@ public abstract class ActivityTitleBase extends SwipeBackActivity{
 	 * @param msg
 	 */
 	public void setInputContentToSearchContentEditText(String msg){
+		setTitleBarVisibility();
 		if(mSearchContentEditText != null){
 			mSearchContentEditText.setText(msg);
 			mSearchContentEditText.invalidate();
@@ -328,6 +345,7 @@ public abstract class ActivityTitleBase extends SwipeBackActivity{
 
 	/**设置搜索框左边搜索图片点击事件**/
 	public void setUpTitleSearchBtn() {
+		setTitleBarVisibility();
 		searchImageView = (ImageView) this.findViewById(R.id.searchImageView);
 		searchImageView.setVisibility(View.VISIBLE);
 		searchImageView.setOnClickListener(onClickListener);
@@ -349,23 +367,26 @@ public abstract class ActivityTitleBase extends SwipeBackActivity{
 			onTitleSearchSelectItem(arg0,  arg1,  arg2,  arg3);
 		}
 	};
-	
+
 	/** 设置标题栏左边的返回键右边的图片 **/
 	public void setUpTitleBackRight() {
+		setTitleBarVisibility();
 		mTitleBackRightBtn = this .findViewById(R.id.common_title_bar_back_right_view);
 		mTitleBackRightBtn.setVisibility(View.VISIBLE);
-	} 
-	
+	}
+
 	/** 设置标题栏左边 显示图片 **/
 	public void setUpTitleLeftImg(int drawable) {
+		setTitleBarVisibility();
 		mTitleLeftImgIv = (ImageView) this .findViewById(R.id.common_title_bar_left_img1);
 		mTitleLeftImgIv.setImageResource(drawable);
 		mTitleLeftImgIv.setVisibility(View.VISIBLE);
 		mTitleLeftImgIv.setOnClickListener(onClickListener);
-	} 
-	
+	}
+
 	/** 设置标题栏中间的字 **/
 	public void setUpTitleCentreText(String titleCentreText,int color) {
+		setTitleBarVisibility();
 		mTitleCentreTextTv = (TextView) this .findViewById(R.id.common_title_bar_title_tv);
 		mTitleCentreTextTv.setText(titleCentreText);
 		mTitleCentreTextTv.setVisibility(View.VISIBLE);
@@ -375,6 +396,7 @@ public abstract class ActivityTitleBase extends SwipeBackActivity{
 
 	/** 设置标题栏中间的字 **/
 	public void setUpTitleCentreText(String titleCentreText) {
+		setTitleBarVisibility();
 		mTitleCentreTextTv = (TextView) this .findViewById(R.id.common_title_bar_title_tv);
 		mTitleCentreTextTv.setText(titleCentreText);
 		mTitleCentreTextTv.setVisibility(View.VISIBLE);
@@ -383,18 +405,20 @@ public abstract class ActivityTitleBase extends SwipeBackActivity{
 
 	/** 设置标题栏中间的字  带图片**/
 	public void setUpTitleCentreText_pic(String titleCentreText,int pic) {
+		setTitleBarVisibility();
 		mTitleCentreTextTvPic = (TextView) this .findViewById(R.id.common_title_bar_title_tv_pic);
 		mTitleCentreTextTvPic.setText(titleCentreText);
 		mTitleCentreTextTvPic.setVisibility(View.VISIBLE);
-		
-		Drawable nav_up=getResources().getDrawable(pic);  
-		nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());  
-		mTitleCentreTextTvPic.setCompoundDrawables(nav_up, null, null, null);  
+
+		Drawable nav_up=getResources().getDrawable(pic);
+		nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
+		mTitleCentreTextTvPic.setCompoundDrawables(nav_up, null, null, null);
 		mTitleCentreTextTvPic.setOnClickListener(onClickListener);
-	} 
-	
+	}
+
 	/** 设置标题栏右边 显示图片 **/
 	public void setUpTitleRightImg(int drawable) {
+		setTitleBarVisibility();
 		mTitleRightImgIv = (ImageView) this .findViewById(R.id.common_title_bar_right_img);
 		if(drawable == 0){
 			mTitleRightImgIv.setVisibility(View.GONE);
@@ -404,9 +428,10 @@ public abstract class ActivityTitleBase extends SwipeBackActivity{
 			mTitleRightImgIv.setOnClickListener(onClickListener);
 		}
 	}
-	
+
 	/** 设置标题栏最右边 显示字样 **/
 	public void setUpTitleRightSearchBtn(String search) {
+		setTitleBarVisibility();
 		mTitleSearchBtn = (Button) this .findViewById(R.id.searchButton);
 		if(TextUtils.isEmpty(search)){
 			mTitleSearchBtn.setVisibility(View.GONE);
@@ -419,6 +444,7 @@ public abstract class ActivityTitleBase extends SwipeBackActivity{
 
 	/** 设置标题栏最右边 显示字样 **/
 	public void setUpTitleRightSearchBtn(String search,int color) {
+		setTitleBarVisibility();
 		mTitleSearchBtn = (Button) this .findViewById(R.id.searchButton);
 		if(TextUtils.isEmpty(search)){
 			mTitleSearchBtn.setVisibility(View.GONE);
@@ -434,6 +460,7 @@ public abstract class ActivityTitleBase extends SwipeBackActivity{
 
 	/** 设置标题栏最右边 是否显示字样 **/
 	public void setUpTitleRightSearchBtn(String search,Boolean isVisibility) {
+		setTitleBarVisibility();
 		mTitleSearchBtn = (Button) this .findViewById(R.id.searchButton);
 		if(isVisibility){
 			mTitleSearchBtn.setVisibility(View.VISIBLE);
@@ -442,10 +469,11 @@ public abstract class ActivityTitleBase extends SwipeBackActivity{
 		}
 		mTitleSearchBtn.setText(search);
 		mTitleSearchBtn.setOnClickListener(onClickListener);
-	} 
-	
+	}
+
 	/** 设置标题栏右边两张图片 显示图片 **/
 	public void setUpTitleRightTwoImg(int drawableLeft,int drawableRight) {
+		setTitleBarVisibility();
 		mTitleRightMapBtn = (ImageView) this .findViewById(R.id.common_title_bar_right_map);
 		mTitleRightSearchBtn = (ImageView) this .findViewById(R.id.common_title_bar_right_search);
 		mTitleMapSearchLin = this .findViewById(R.id.common_title_bar_right_lay);

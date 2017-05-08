@@ -5,8 +5,8 @@ package com.ltf.mytoolslibrary.viewbase.constent;
  */
 public class constent {
     public static final String WEBSITE = "website";
-    public static final int designWidth = 480;
-    public static final int designHeight = 854;
+    public static int designWidth = 480;
+    public static int designHeight = 854;
 
     //以下是相机拍照选取图片  仿微信
     public static final int REQUEST_CODE_TAKE = 1001;

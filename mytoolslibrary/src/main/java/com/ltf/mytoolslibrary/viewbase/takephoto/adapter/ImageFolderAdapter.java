@@ -81,11 +81,11 @@ public class ImageFolderAdapter extends BaseAdapter {
         ImageFolder folder = getItem(position);
         holder.folderName.setText(folder.name);
         holder.imageCount.setText(mActivity.getString(R.string.folder_image_count, folder.images.size()));
-        holder.folderName.setTextSize(AutoUtils.getDisplayHeightValue(6));
-        holder.imageCount.setTextSize(AutoUtils.getDisplayHeightValue(4));
-        LinearLayout.LayoutParams l = new LinearLayout.LayoutParams(AutoUtils.getDisplayWidthValue(120), AutoUtils.getDisplayHeightValue(120));
-        l.setMargins(AutoUtils.getDisplayHeightValue(4), AutoUtils.getDisplayHeightValue(4), AutoUtils.getDisplayHeightValue(4), AutoUtils.getDisplayHeightValue(4));//4个参数按顺序分别是左上右下
-        holder.cover.setLayoutParams(l);
+//        holder.folderName.setTextSize(AutoUtils.getDisplayHeightValue(6));
+//        holder.imageCount.setTextSize(AutoUtils.getDisplayHeightValue(4));
+//        LinearLayout.LayoutParams l = new LinearLayout.LayoutParams(AutoUtils.getDisplayWidthValue(120), AutoUtils.getDisplayHeightValue(120));
+//        l.setMargins(AutoUtils.getDisplayHeightValue(4), AutoUtils.getDisplayHeightValue(4), AutoUtils.getDisplayHeightValue(4), AutoUtils.getDisplayHeightValue(4));//4个参数按顺序分别是左上右下
+//        holder.cover.setLayoutParams(l);
         imagePicker.getImageLoader().displayImage(mActivity, folder.cover.path, holder.cover, mImageSize, mImageSize);
 
         if (lastSelected == position) {

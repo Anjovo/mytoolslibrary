@@ -285,7 +285,6 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
                 //以下是表明从多选模式下  用户点击了拍照
                 if(TakephotoUtils.getTakephotoUtils().getModeStype() == TakephotoUtils.NoCropModeStype){
                     TakephotoUtils.getTakephotoUtils().setModeStype(true);//动态分配裁剪模式
-                    T.showShort(this,"jgowjnsjngnjsoi");
                 }
                 if (imagePicker.isCrop()) {
                     Intent intent = new Intent(ImageGridActivity.this, ImageCropActivity.class);

@@ -6,6 +6,8 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ltf.mytoolslibrary.R;
@@ -30,6 +32,7 @@ public class VideoRecorderActivity extends ActivityTitleBase {
     private VideoRecorderView mRecordView;
     private RecordButton mRecordButton;
     private TextView mTipLoosen;
+    private RelativeLayout anniu_height;
     private TextView mTipGlide;
     private MagicProgressBar mPB;
     private boolean isAudio = true;
@@ -98,7 +101,9 @@ public class VideoRecorderActivity extends ActivityTitleBase {
         mTipLoosen = (TextView) findViewById(R.id.tv_loosen_record);
         mTipGlide = (TextView) findViewById(R.id.tv_up_glide_record);
         mPB = (MagicProgressBar) findViewById(R.id.pb_record);
+        anniu_height = (RelativeLayout) findViewById(R.id.anniu_height);
 
+//        anniu_height.setLayoutParams(new LinearLayout.LayoutParams());
     }
 
     /**

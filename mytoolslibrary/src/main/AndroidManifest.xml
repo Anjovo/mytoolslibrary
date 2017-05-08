@@ -37,7 +37,8 @@
     <application
         android:allowBackup="false"
         android:label="@string/app_name"
-        android:supportsRtl="false">
+        android:supportsRtl="false"
+        android:theme="@style/AppTheme">
         <activity
             android:name=".viewbase.view.UniversalWebActivity"
             android:screenOrientation="portrait"

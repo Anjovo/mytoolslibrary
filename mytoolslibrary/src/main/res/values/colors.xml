@@ -27,11 +27,13 @@
     <color name="si_default_text_color">#97c728</color>
     <color name="si_default_text_color_selected">#97c728</color>
     <color name="si_default_indicator_bg">#97c728</color>
+
     <color name="colorPrimary">#97c728</color>
     <color name="colorPrimaryDark">#97c728</color>
     <color name="colorPrimaryLight">#97c728</color>
     <color name="colorAccent">#97c728</color>
     <color name="black_light">#97c728</color>
+    
     <color name="gray_dark">#97c728</color>
     <color name="gray_light">#97c728</color>
     <color name="brown">#97c728</color>
