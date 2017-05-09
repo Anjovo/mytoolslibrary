@@ -29,7 +29,19 @@
             android:paddingRight="@dimen/y2"
             android:paddingTop="@dimen/y2"
             android:stretchMode="columnWidth"
+            android:visibility="gone"
             android:verticalSpacing="@dimen/y2" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recycler"
+            android:clipToPadding="false"
+            android:paddingBottom="50dp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:paddingTop="2dp"/>
 
         <RelativeLayout
             android:id="@+id/footer_bar"

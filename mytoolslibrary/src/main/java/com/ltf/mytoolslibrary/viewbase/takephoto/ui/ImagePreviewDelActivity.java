@@ -124,7 +124,7 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
             topBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.top_out));
             topBar.setVisibility(View.GONE);
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-                tintManager.setStatusBarTintResource(R.color.transparent);//通知栏所需颜色
+                tintManager.setStatusBarTintResource(R.color.black);//通知栏所需颜色
             }else{
                 viewss.setVisibility(View.GONE);
             }

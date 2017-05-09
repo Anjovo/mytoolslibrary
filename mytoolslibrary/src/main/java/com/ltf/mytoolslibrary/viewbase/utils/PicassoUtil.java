@@ -470,6 +470,7 @@ public class PicassoUtil {
     public void onLocadCropWidthHeightImage(final Activity activity, String path, final int width, final int height, final ImageView imageView,Callback callback) {
         if(!AnyIdCardCheckUtils.getInstance(activity).isUrl(path) && !(path.startsWith("http://") || path.startsWith("https://"))){
             L.e("图片加载中","----本地图片加载--"+path);
+//            File newFile = CompressHelper.getDefault(this).compressToFile(oldFile);
             RequestCreator mRequestCreatorFile = Picasso.with(activity)//
                     .load(new File(path)).placeholder(load_image)//
                     .error(load_error).config(Config.RGB_565);
@@ -490,7 +491,7 @@ public class PicassoUtil {
             L.e("图片加载中","----网络图片加载--"+path);
             RequestCreator mRequestCreator = Picasso.with(activity)//
                     .load(path).placeholder(load_image)//
-                    .error(load_error);
+                    .error(load_error).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE);
             if(width == 0 || height == 0){
 
             }else{

@@ -1,18 +1,23 @@
 package com.ltf.mytoolslibrary.viewbase.takephoto;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
+import android.util.Log;
 
 import com.ltf.mytoolslibrary.viewbase.CacheFolder.CacheFolderUtils;
 import com.ltf.mytoolslibrary.viewbase.constent.constent;
 import com.ltf.mytoolslibrary.viewbase.takephoto.bean.ImageFolder;
 import com.ltf.mytoolslibrary.viewbase.takephoto.bean.ImageItem;
 import com.ltf.mytoolslibrary.viewbase.takephoto.loader.ImageLoader;
+import com.ltf.mytoolslibrary.viewbase.takephoto.utils.ProviderUtil;
 import com.ltf.mytoolslibrary.viewbase.takephoto.view.CropImageView;
 import com.ltf.mytoolslibrary.viewbase.utils.show.L;
 import com.ltf.mytoolslibrary.viewbase.utils.show.T;
@@ -46,6 +51,7 @@ public class ImagePicker {
     public static final String EXTRA_RESULT_ITEMS = "extra_result_items";
     public static final String EXTRA_SELECTED_IMAGE_POSITION = "selected_image_position";
     public static final String EXTRA_IMAGE_ITEMS = "extra_image_items";
+    public static final String EXTRA_FROM_ITEMS = "extra_from_items";
 
     private boolean multiMode = true;    //图片选择模式
     private int selectLimit = 9;         //最大选择图片数量
@@ -260,9 +266,29 @@ public class ImagePicker {
                 // 照相机有自己默认的存储路径，拍摄的照片将返回一个缩略图。如果想访问原始图片，
                 // 可以通过dat extra能够得到原始图片位置。即，如果指定了目标uri，data就没有数据，
                 // 如果没有指定uri，则data就返回有数据！
-                ContentValues contentValues = new ContentValues(1);
-                contentValues.put(MediaStore.Images.Media.DATA, takeImageFile.getAbsolutePath());
-                Uri uri = activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,contentValues);
+
+                Uri uri;
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
+                    uri = Uri.fromFile(takeImageFile);
+                } else {
+
+
+                    /**
+                     * 7.0 调用系统相机拍照不再允许使用Uri方式，应该替换为FileProvider
+                     * 并且这样可以解决MIUI系统上拍照返回size为0的情况
+                     */
+                    uri = FileProvider.getUriForFile(activity, ProviderUtil.getFileProviderName(activity), takeImageFile);
+                    //加入uri权限 要不三星手机不能拍照
+                    List<ResolveInfo> resInfoList = activity.getPackageManager().queryIntentActivities
+                            (takePictureIntent, PackageManager.MATCH_DEFAULT_ONLY);
+                    for (ResolveInfo resolveInfo : resInfoList) {
+                        String packageName = resolveInfo.activityInfo.packageName;
+                        activity.grantUriPermission(packageName, uri, Intent
+                                .FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    }
+                }
+
+                Log.e("nanchen", ProviderUtil.getFileProviderName(activity));
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             }
         }
@@ -319,6 +345,13 @@ public class ImagePicker {
         if (isAdd) mSelectedImages.add(item);
         else mSelectedImages.remove(item);
         notifyImageSelectedChanged(position, item, isAdd);
+    }
+
+    public void setSelectedImages(ArrayList<ImageItem> selectedImages) {
+        if (selectedImages == null) {
+            return;
+        }
+        this.mSelectedImages = selectedImages;
     }
 
     private void notifyImageSelectedChanged(int position, ImageItem item, boolean isAdd) {

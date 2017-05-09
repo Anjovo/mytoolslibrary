@@ -1,16 +1,14 @@
 package com.ltf.mytoolslibrary.viewbase.takephoto.ui;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ltf.mytoolslibrary.R;
 import com.ltf.mytoolslibrary.viewbase.takephoto.ImagePicker;
-import com.ltf.mytoolslibrary.viewbase.takephoto.Utils;
 import com.ltf.mytoolslibrary.viewbase.takephoto.adapter.ImagePageAdapter;
 import com.ltf.mytoolslibrary.viewbase.takephoto.bean.ImageItem;
+import com.ltf.mytoolslibrary.viewbase.takephoto.utils.DataHolder;
 import com.ltf.mytoolslibrary.viewbase.takephoto.view.ViewPagerFixed;
 
 import java.util.ArrayList;
@@ -37,6 +35,7 @@ public abstract class ImagePreviewBaseActivity extends ImageBaseActivity {
     protected ViewPagerFixed mViewPager;
     protected ImagePageAdapter mAdapter;
     protected boolean isDelete = true;
+    protected boolean isFromItems = false;
 
     @Override
     protected int setLayoutId() {
@@ -65,7 +64,16 @@ public abstract class ImagePreviewBaseActivity extends ImageBaseActivity {
         super.onCreate(savedInstanceState);
         isDelete = getIntent().getBooleanExtra("isDelete",true);
         mCurrentPosition = getIntent().getIntExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, 0);
-        mImageItems = (ArrayList<ImageItem>) getIntent().getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
+        isFromItems = getIntent().getBooleanExtra(ImagePicker.EXTRA_FROM_ITEMS,false);
+        if (isFromItems){
+            // 据说这样会导致大量图片崩溃
+            mImageItems = (ArrayList<ImageItem>) getIntent().getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
+        }else{
+            // 下面采用弱引用会导致预览崩溃
+            mImageItems =  (ArrayList<ImageItem>) DataHolder.getInstance().retrieve(DataHolder.DH_CURRENT_IMAGE_FOLDER_ITEMS);
+        }
+
+//        mImageItems = (ArrayList<ImageItem>) getIntent().getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
         imagePicker = ImagePicker.getInstance();
         selectedImages = imagePicker.getSelectedImages();
 

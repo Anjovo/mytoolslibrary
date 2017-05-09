@@ -9,12 +9,9 @@ import com.ltf.mytoolslibrary.viewbase.takephoto.TakephotoUtils;
 import com.ltf.mytoolslibrary.viewbase.takephoto.bean.ImageItem;
 import com.ltf.mytoolslibrary.viewbase.utils.PicassoUtil;
 import com.ltf.mytoolslibrary.viewbase.utils.show.L;
-import com.ltf.mytoolslibrary.viewbase.video.TakeVideoUtils;
 
 import java.util.ArrayList;
 
-/**工具类库
- * 使用用例**/
 public class MainActivity extends ActivityTitleBase {
 
     @Override
@@ -32,7 +29,14 @@ public class MainActivity extends ActivityTitleBase {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PicassoUtil.getInstantiation().onWidgetImage(this,"http://img1.mm131.com/pic/1472/1.jpg", (ImageView) findViewById(R.id.imgs));
+        //顯示一張美女圖片
+        PicassoUtil.getInstantiation().onWidgetImage(this, "http://img1.mm131.com/pic/1472/1.jpg", (ImageView) findViewById(R.id.imgs));
+//        Glide.with(this)                             //配置上下文
+//                .load("http://img1.mm131.com/pic/1472/1.jpg")      //设置图片路径(fix #8,文件名包含%符号 无法识别和显示)
+//                .error(R.mipmap.default_image)           //设置错误图片
+//                .placeholder(R.mipmap.default_image)     //设置占位图片
+//                .diskCacheStrategy(DiskCacheStrategy.ALL)//缓存全尺寸
+//                .into((ImageView) findViewById(R.id.imgs));
     }
 
     @Override
@@ -50,21 +54,26 @@ public class MainActivity extends ActivityTitleBase {
         return R.layout.activity_main;
     }
 
-    public void onClickd(View v){
-//        TakephotoUtils.getTakephotoUtils().initImagePickerMore(this);
-//        TakephotoUtils.getTakephotoUtils().startTakePhoto(this, new TakephotoUtils.onUserSelectPicBackLisnner() {
-//            @Override
-//            public void onUserSelectPicBack(ArrayList<ImageItem> pic) {
-//                if(pic !=null&&pic.size()>0)
-//                L.d("mainActivity",pic.get(0).path);//拍照返回
-//            }
-//        });
-        TakeVideoUtils.getTakeVideoUtils().startTakeVideo(this, false, new TakeVideoUtils.onTakeVideoClickLisnner() {
+    public void onClickd(View v) {
+        TakephotoUtils.getTakephotoUtils().initImagePickerMore(this);
+        TakephotoUtils.getTakephotoUtils().startTakePhoto(this, new TakephotoUtils.onUserSelectPicBackLisnner() {
             @Override
-            public void onTakeVideoClickBack(String videoPath) {
-                L.d("mainActivity",videoPath);//录制视频返回
+            public void onUserSelectPicBack(ArrayList<ImageItem> pic) {
+                if(pic !=null&&pic.size()>0)
+                L.d("mainActivity",pic.get(0).path);//拍照返回
+                TakephotoUtils.getTakephotoUtils().startUserSelectYuLan(MainActivity.this, 0, true, pic, new TakephotoUtils.onUserSelectPicBackLisnner() {
+                    @Override
+                    public void onUserSelectPicBack(ArrayList<ImageItem> pic) {
+                    }
+                });
             }
         });
+//        TakeVideoUtils.getTakeVideoUtils().startTakeVideo(this, false, new TakeVideoUtils.onTakeVideoClickLisnner() {
+//            @Override
+//            public void onTakeVideoClickBack(String videoPath) {
+//                L.d("mainActivity", videoPath);//录制视频返回
+//            }
+//        });
     }
 
 }

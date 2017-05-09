@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.ltf.mytoolslibrary.R;
 import com.ltf.mytoolslibrary.viewbase.takephoto.ImagePicker;
 import com.ltf.mytoolslibrary.viewbase.takephoto.bean.ImageItem;
+import com.ltf.mytoolslibrary.viewbase.takephoto.utils.BitmapUtil;
 import com.ltf.mytoolslibrary.viewbase.takephoto.view.CropImageView;
 import com.ltf.mytoolslibrary.viewbase.utils.show.L;
 import com.ltf.mytoolslibrary.viewbase.utils.show.T;
@@ -95,7 +96,9 @@ public class ImageCropActivity extends ImageBaseActivity implements View.OnClick
         options.inJustDecodeBounds = false;
         mBitmap = BitmapFactory.decodeFile(imagePath, options);
         L.e("图片裁剪","imagePath=="+imagePath);
-        mCropImageView.setImageBitmap(mBitmap);
+//        mCropImageView.setImageBitmap(mBitmap);
+//设置默认旋转角度
+        mCropImageView.setImageBitmap(mCropImageView.rotate(mBitmap, BitmapUtil.getBitmapDegree(imagePath)));
 
 //        mCropImageView.setImageURI(Uri.fromFile(new File(imagePath)));
     }
@@ -149,6 +152,7 @@ public class ImageCropActivity extends ImageBaseActivity implements View.OnClick
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mCropImageView.setOnBitmapSaveCompleteListener(null);
         if (null != mBitmap && !mBitmap.isRecycled()) {
             mBitmap.recycle();
             mBitmap = null;

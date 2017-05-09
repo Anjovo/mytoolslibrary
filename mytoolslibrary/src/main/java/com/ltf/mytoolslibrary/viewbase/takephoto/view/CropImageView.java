@@ -19,10 +19,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
-import android.widget.ImageView;
 
 import com.ltf.mytoolslibrary.R;
 
@@ -35,7 +35,7 @@ import java.util.Locale;
 
 /**
  * ================================================
- * 作    者：廖子尧
+ * 作    者：李堂飞
  * 版    本：1.0
  * 创建日期：2016/1/7
  * 描    述：
@@ -47,7 +47,7 @@ import java.util.Locale;
  * ================================================
  */
 
-public class CropImageView extends ImageView {
+public class CropImageView extends AppCompatImageView{
 
     /******************************** 中间的FocusView绘图相关的参数 *****************************/
     public enum Style {
@@ -449,7 +449,7 @@ public class CropImageView extends ImageView {
      * @param degrees 选择的角度（单位 度）
      * @return 旋转后的Bitmap
      */
-    private Bitmap rotate(Bitmap bitmap, int degrees) {
+    public Bitmap rotate(Bitmap bitmap, int degrees) {
         if (degrees != 0 && bitmap != null) {
             Matrix matrix = new Matrix();
             matrix.setRotate(degrees, (float) bitmap.getWidth() / 2, (float) bitmap.getHeight() / 2);
