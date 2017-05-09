@@ -17,6 +17,6 @@
         android:gravity="center"
         android:text="拍摄照片"
         android:textColor="#CDCECE"
-        android:textSize="@dimen/y20"/>
+        android:textSize="@dimen/y16"/>
 
 </RelativeLayout>
