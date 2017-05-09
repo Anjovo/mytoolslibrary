@@ -8,6 +8,7 @@ import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.ViewGroup.LayoutParams;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 
 import com.ltf.mytoolslibrary.R;
 import com.ltf.mytoolslibrary.viewbase.CacheFolder.CacheFolderUtils;
+import com.ltf.mytoolslibrary.viewbase.compress.CompressHelper;
 import com.ltf.mytoolslibrary.viewbase.isnull.IsNullUtils;
 import com.ltf.mytoolslibrary.viewbase.utils.show.L;
 import com.squareup.picasso.Callback;
@@ -470,9 +472,10 @@ public class PicassoUtil {
     public void onLocadCropWidthHeightImage(final Activity activity, String path, final int width, final int height, final ImageView imageView,Callback callback) {
         if(!AnyIdCardCheckUtils.getInstance(activity).isUrl(path) && !(path.startsWith("http://") || path.startsWith("https://"))){
             L.e("图片加载中","----本地图片加载--"+path);
-//            File newFile = CompressHelper.getDefault(this).compressToFile(oldFile);
+            //使用图片压缩
+            File newFile = CompressHelper.getDefault(activity).compressToFile(new File(path));
             RequestCreator mRequestCreatorFile = Picasso.with(activity)//
-                    .load(new File(path)).placeholder(load_image)//
+                    .load(newFile).placeholder(load_image)//
                     .error(load_error).config(Config.RGB_565);
             if(width == 0 || height == 0){
                 mRequestCreatorFile.memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE);//
@@ -505,5 +508,39 @@ public class PicassoUtil {
                 mRequestCreator.into(imageView,callback);
             }
         }
+    }
+
+    /**
+     * 主要通过尺寸压缩和质量压缩，以达到清晰度最优，该项目参考了https://github.com/zetbaitsu/Compressor 的大部分代码，且在基础上修正了部分bug
+     * @param activity
+     * @param yourFileName
+     * @param oldFile
+     * .setMaxWidth(720)  // 默认最大宽度为720
+    .setMaxHeight(960) // 默认最大高度为960
+    .setQuality(80)    // 默认压缩质量为80
+     * @return
+     */
+    public File oldPicCompressToNewPic(Activity activity,float mMaxWidth,float mMaxHeight,int mQuality,String yourFileName,File oldFile){
+        CompressHelper.Builder mBuilder = new CompressHelper.Builder(activity);
+        if(!IsNullUtils.isNulls(yourFileName)){
+            mBuilder.setFileName(yourFileName); // 设置你需要修改的文件名
+        }
+        if(mMaxWidth != 0){
+            mBuilder.setMaxWidth(mMaxWidth);  // 默认最大宽度为720
+        }
+        if(mMaxHeight != 0){
+            mBuilder.setMaxHeight(mMaxHeight); // 默认最大高度为960
+        }
+        if(mQuality != 0){
+            mBuilder.setQuality(mQuality);    // 默认压缩质量为80
+        }
+
+       File NewFile = mBuilder.setCompressFormat(Bitmap.CompressFormat.JPEG) // 设置默认压缩为jpg格式
+                .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
+                        Environment.DIRECTORY_PICTURES).getAbsolutePath())
+                .build()
+                .compressToFile(oldFile);
+        return NewFile;
+
     }
 }
