@@ -16,8 +16,8 @@ public class MainActivity extends ActivityTitleBase {
 
     @Override
     protected void initTitle() {
-        setUpTitleBack();
-        setUpTitleCentreText("中心文字");
+//        setUpTitleBack();
+//        setUpTitleCentreText("中心文字");
     }
 
     @Override
@@ -46,7 +46,7 @@ public class MainActivity extends ActivityTitleBase {
 
     @Override
     public String setStatusBarTintResource() {
-        return "0";
+        return "-1";
     }
 
     @Override

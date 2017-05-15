@@ -12,8 +12,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.alipay_android_sdk.FragmentActivity;
 import com.ltf.mytoolslibrary.R;
@@ -128,13 +126,18 @@ public abstract class SwipeBackActivity extends FragmentActivity implements Swip
             AutoUtils.setSize(this, false, constent.designWidth, constent.designHeight);//没有状态栏,设计尺寸的宽高
         }
         if (setLayoutId() != 0) {
-//            setContentView(setLayoutId());
-            setContentView(R.layout.common_title_bar);
-            //将子类传过来的子View解析到FrameLayout里
-            FrameLayout viewContent = (FrameLayout) findViewById(R.id.viewContent);
-            mView = LayoutInflater.from(this).inflate(setLayoutId(),viewContent);
+            if("-1".equals(setStatusBarTintResource())){
+                mView = LayoutInflater.from(this).inflate(setLayoutId(),null);
+                setContentView(mView);
+            }else{
+                setContentView(R.layout.common_title_bar);
+                FrameLayout mViewGroup = (FrameLayout) this.findViewById(R.id.viewContent);
+                mView = LayoutInflater.from(this).inflate(setLayoutId(),mViewGroup);
+            }
             mTitleView = this.findViewById(R.id.title_view);
-            mTitleView.setVisibility(View.GONE);
+            if(mTitleView != null){
+                mTitleView.setVisibility(View.GONE);
+            }
 //            if(setIsViewStaueColor()){
 //                mTitleView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) this.getResources().getDimension(R.dimen.y80)));
 //            }else{

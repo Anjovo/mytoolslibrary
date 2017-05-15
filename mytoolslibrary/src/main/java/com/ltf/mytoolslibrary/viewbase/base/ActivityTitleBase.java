@@ -15,7 +15,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,10 +28,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ltf.mytoolslibrary.R;
-import com.ltf.mytoolslibrary.viewbase.app.ApplicationBase;
 import com.ltf.mytoolslibrary.viewbase.base.quicksearch.SearchAdapter;
 import com.ltf.mytoolslibrary.viewbase.base.quicksearch.dataBean;
-import com.ltf.mytoolslibrary.viewbase.constent.constent;
 import com.ltf.mytoolslibrary.viewbase.isnull.IsNullUtils;
 import com.ltf.mytoolslibrary.viewbase.permission.CheckPermissionUtils;
 import com.ltf.mytoolslibrary.viewbase.swipebacklayout.app.SwipeBackActivity;
@@ -40,8 +37,6 @@ import com.ltf.mytoolslibrary.viewbase.takephoto.TakephotoUtils;
 import com.ltf.mytoolslibrary.viewbase.utils.AppManager;
 import com.ltf.mytoolslibrary.viewbase.utils.NetworkUtils;
 import com.ltf.mytoolslibrary.viewbase.utils.ScreenUtils;
-import com.ltf.mytoolslibrary.viewbase.utils.show.L;
-import com.ltf.mytoolslibrary.viewbase.utils.show.T;
 import com.ltf.mytoolslibrary.viewbase.video.TakeVideoUtils;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
@@ -197,16 +192,16 @@ public abstract class ActivityTitleBase extends SwipeBackActivity{
 	public void setTitleBarNoVisibility(){
 		if(mTitleView == null){
 			mTitleView = this.findViewById(R.id.title_view);
-		}
-		mTitleView.setVisibility(View.GONE);
+		}else{
+		mTitleView.setVisibility(View.GONE);}
 	}
 
 	/**设置标题不显示**/
 	public void setTitleBarVisibility(){
 		if(mTitleView == null){
 			mTitleView = this.findViewById(R.id.title_view);
-		}
-		mTitleView.setVisibility(View.VISIBLE);
+		}else{
+		mTitleView.setVisibility(View.VISIBLE);}
 	}
 
 	/** 设置标题栏左边的定位城市 **/
