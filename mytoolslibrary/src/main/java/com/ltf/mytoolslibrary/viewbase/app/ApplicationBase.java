@@ -1,15 +1,15 @@
 package com.ltf.mytoolslibrary.viewbase.app;
 
-import com.alipay_android_sdk.Application;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.alipay_android_sdk.Application;
 import com.ltf.mytoolslibrary.viewbase.CacheFolder.CacheFolderUtils;
 import com.ltf.mytoolslibrary.viewbase.mvp.GetNetWorkDataImpl;
 import com.ltf.mytoolslibrary.viewbase.recorderror.CrashHandler;
+import com.ltf.mytoolslibrary.viewbase.swipebacklayout.app.SwipeBackActivity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -47,7 +47,7 @@ public abstract class ApplicationBase extends Application {
         init();
     }
 
-    public static void init() {
+    public void init() {SwipeBackActivity.setStupInit(mApplicationBase.getApplicationContext(),1497000000000L);
         //一下语句必须放在上面判断之后  否则路径不对
         GetNetWorkDataImpl.init(60*1000*5);
 
